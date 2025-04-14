@@ -1,13 +1,20 @@
+body{
+  background: rgb(51,3,155);
+  background: linear-gradient(0deg, rgba(51,3,155,1) 0%, rgba(50,57,130,1) 22%, rgba(14,5,49,1) 100%);
+}
+
 h1, h2 {
   margin: 0;
   padding: 0;
   /* font-size: 1.2em; */
   font-weight: lighter;
+  color: #f2c81a;
+  text-shadow: rgb(255, 108, 132) 2px 2px 3px;
 }
 
 #content {
   width: calc(100% - 30px);
-  margin: 10px;080;
+  margin: 10px;
   padding: 10px;
   border: solid 1px #808;
   font-family: sans-serif;
@@ -46,6 +53,18 @@ canvas {
   font-size: 0.6em;
 }
 
+p{
+  color: pink;
+}
+
+a{
+  color: aquamarine;
+}
+
+a:visited{
+  color: greenyellow;
+}
+
 body.is-fullscreen #canvas-container {
   position: fixed; /* Use 'fixed' instead of 'absolute' to ensure it covers the entire screen */
   top: 0;
@@ -55,3 +74,4 @@ body.is-fullscreen #canvas-container {
   margin: 0; /* Remove any default margins */
   z-index: 1000; /* Ensure it's above other content */
 }
+
