@@ -169,11 +169,11 @@ function draw() {
   //foreground
   beginShape();
   fill(foregroundMountain);
-  vertex(width/8 - mouseX * foregroundParallaxMultX, height+40 - mouseY * foregroundParallaxMultY)
+  vertex(width/8 - mouseX * foregroundParallaxMultX, height+60 - mouseY * foregroundParallaxMultY)
   vertex(width/4 - mouseX * foregroundParallaxMultX, height-35 - mouseY * foregroundParallaxMultY)
   vertex(width/2 - mouseX * foregroundParallaxMultX, height-50 - mouseY * foregroundParallaxMultY)
   vertex(3*width/4 - mouseX * foregroundParallaxMultX, height-35 - mouseY * foregroundParallaxMultY)
-  vertex(7*width/8 - mouseX * foregroundParallaxMultX, height+40 - mouseY * foregroundParallaxMultY)
+  vertex(7*width/8 - mouseX * foregroundParallaxMultX, height+60 - mouseY * foregroundParallaxMultY)
 
   
   endShape()
