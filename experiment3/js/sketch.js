@@ -186,7 +186,7 @@ function generateGrid2(numCols, numRows) {
   }
   //mountain function
   let inc = 0.01
-  let scale = 20
+  let scale = 30
   let yOff = 0;
   for(let y = 0; y < numRows; y++){
     let xOff = 0;
@@ -207,6 +207,20 @@ function generateGrid2(numCols, numRows) {
       xOff += inc*scale
     }
     yOff += inc*scale
+  }
+  
+  for (let i = 0; i < numRows; i++) {
+    for (let j = 0; j < numCols; j++) {
+      if(gridCheck(grid, i, j, '+')){
+        if(floor(random(100)) > 98){
+          grid[i][j] = 'c';
+        }
+        
+        if(floor(random(100)) >= 99){
+          grid[i][j] = 'h';
+        }
+      }
+    }
   }
   
   
@@ -248,31 +262,50 @@ function drawGrid(grid) {
 
 function drawGrid2(grid){
   background(128);
+
+  //base desert pass
+  for(let i = 0; i < grid.length; i++) {
+    for(let j = 0; j < grid[i].length; j++) {
+      placeTile(i, j, 1+((j)%3), 18+(floor(random(2))))
+    }
+  }
   
-    //base desert pass
-    for(let i = 0; i < grid.length; i++) {
-      for(let j = 0; j < grid[i].length; j++) {
-        placeTile(i, j, 1+((j)%3), 18+(floor(random(2))))
+  //dark sand rendering pass
+  for(let i = 0; i < grid.length; i++) {
+    for(let j = 0; j < grid[i].length; j++) {
+      if(gridCheck(grid, i, j, '_')){
+        drawContext(grid, i, j, '_', 0, 0, darkSandTable)
       }
     }
-    
-    //dark sand rendering pass
-    for(let i = 0; i < grid.length; i++) {
-      for(let j = 0; j < grid[i].length; j++) {
-        if(gridCheck(grid, i, j, '_')){
-          placeTile(i, j, 9+((j)%3), 18+(floor(random(2))))
-        }
+  }
+  //mountain rendering pass
+  for(let i = 0; i < grid.length; i++) {
+    for(let j = 0; j < grid[i].length; j++) {
+      if(gridCheck(grid, i, j, '-')){
+        drawContext(grid, i, j, '-', 0, 0, darkSandTable)
+        drawContext(grid, i, j, '-', 0, 0, rockTable)
       }
     }
-    //mountain rendering pass
-    for(let i = 0; i < grid.length; i++) {
-      for(let j = 0; j < grid[i].length; j++) {
-        if(gridCheck(grid, i, j, '-')){
-          placeTile(i, j, 9+((j)%3), 18+(floor(random(2))))
-          drawContext(grid, i, j, '-', 0, 0, rockTable)
-        }
+  }
+  
+  for(let i = 0; i < grid.length; i++) {
+    for(let j = 0; j < grid[i].length; j++) {
+      if(gridCheck(grid, i, j, 'c')){
+        placeTile(i, j, 2, 28)
       }
     }
+  }
+  
+  for(let i = 0; i < grid.length; i++) {
+    for(let j = 0; j < grid[i].length; j++) {
+      if(gridCheck(grid, i, j, 'h')){
+        placeTile(i, j, 26, 0)
+      }
+    }
+  }
+
+  drawDustFilter();
+
 }
 
 function drawFog(){
@@ -290,6 +323,41 @@ function drawFog(){
     //console.log(noiseLevel)
     ellipse(700-noiseLevel-i*i*0.06,height*i/fogDetail, 110, 120)
   }
+}
+
+function drawDustFilter(){
+  noStroke();
+  fill('rgba(255,119,18, 0.5)')
+  rect(0, 0, width, height)
+  
+  let detail = 40
+  let factor = 5
+  let offset = 100
+  
+  for(let i = 0; i<detail; i++){
+    for(let j = 0; j<detail; j++){
+      fill('rgba(161,68,1, 0.5)')
+      let val = noise(i/factor+offset, j/factor+offset)
+      if(val > 0.75){
+        let x_coord = (val+i)*width/40 + millis()*.03;
+        let y_coord = (j+val)*height/40
+        if(x_coord>750){
+          x_coord -= 750
+        }else if(x_coord<0){
+          x_coord += 750
+        }
+        
+        if(y_coord>700){
+          y_coord -= 700
+        }else if(y_coord<0){
+          y_coord += 750
+        }
+        ellipse(x_coord, y_coord, 70, 40)
+      }
+    }
+  }
+  
+  
 }
 
 const wallTable = [
@@ -330,6 +398,29 @@ const rockTable = [
   [16,3], // SEW
   [16,4], // everything
 ]
+
+
+
+
+const darkSandTable = [
+  [9,18], // nothing
+  [5,18], // N
+  [5,20], //  S
+  [5, 18],//  NS
+  [6,16], //  E
+  [4,20], //  NE
+  [4,18], //  SE
+  [6,19], //  NSE
+  [6,18], //  W
+  [6,20], //  NW
+  [4,18], // SW
+  [4,19], //NSW
+  [9,18], //EW
+  [5,20], // NEW
+  [5,18], // SEW
+  [9,18], // everything
+]
+
 
 
 
