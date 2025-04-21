@@ -26,6 +26,8 @@
 	<script type="text/javascript" src="./js/project.js" DEFER></script>
 	<!-- Use me for a p5.js project -->
 	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+	<script src="./js/p2Base.js" defer></script>
+    <!-- <script src="/p2_solution.js" defer></script> -->
 </head>
 <body>
 	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
@@ -38,10 +40,19 @@
 				<div id="canvas-container">
 					<!-- canvas will be added here -->
 				</div>
+				<button id="reseedButton">
+					reseed
+				  </button>
+				  <span id="seedReport"></span>
+				  <hr />
+				  <span id="canvasContainer" style="margin: 10px;"></span>
+				  <textarea cols="40" rows="40" id="asciiBox" style="opacity: 0.5; letter-spacing: 1ex; width: 320px; margin: 10px; font-family: monospace;"></textarea>
                 <div class="fullscreen-box">
                     <button id="fullscreen">Fullscreen</button>
                 </div>
 			</div>
+
+			
 
 			<div class="minor-section">
 				<h2>Description</h2>
