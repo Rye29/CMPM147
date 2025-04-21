@@ -27,6 +27,10 @@
 	<!-- Use me for a p5.js project -->
 	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
 	<script src="./js/p2Base.js" defer></script>
+	<script src="./js/p3Base.js" defer></script>
+
+
+
     <!-- <script src="/p2_solution.js" defer></script> -->
 </head>
 <body>
@@ -39,14 +43,18 @@
 			<div class="minor-section">
 				<div id="canvas-container">
 					<!-- canvas will be added here -->
+					<button id="reseedButton">
+						reseed
+					</button>
+					<span id="seedReport"></span>
+					<button id="switchButton">
+						switch canvas
+					</button>
+					<hr />
+					<span id="canvasContainer" style="margin: 10px;"></span>
+					<textarea cols="40" rows="40" id="asciiBox" style="opacity: 0.5; letter-spacing: 1ex; width: 320px; margin: 10px; font-family: monospace;"></textarea>
 				</div>
-				<button id="reseedButton">
-					reseed
-				  </button>
-				  <span id="seedReport"></span>
-				  <hr />
-				  <span id="canvasContainer" style="margin: 10px;"></span>
-				  <textarea cols="40" rows="40" id="asciiBox" style="opacity: 0.5; letter-spacing: 1ex; width: 320px; margin: 10px; font-family: monospace;"></textarea>
+				
                 <div class="fullscreen-box">
                     <button id="fullscreen">Fullscreen</button>
                 </div>

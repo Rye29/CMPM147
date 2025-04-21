@@ -52,7 +52,38 @@ function setup() {
 }
 
 /* exported generateGrid, drawGrid */
+/* exported generateGrid2, drawGrid2 */
+
 /* global placeTile */
+
+function gridCheck(grid, i, j, target){
+  if(i < grid.length && j < grid[0].length && j>= 0 && i >= 0){
+    if(grid[i][j] == target){
+      return 1;
+    }
+  }
+  return 0;
+}
+
+function gridCode(grid, i, j, target){
+  let NB = gridCheck(grid, i-1, j, target);
+  let SB = gridCheck(grid, i+1, j, target);
+  let WB = gridCheck(grid, i, j-1, target);
+  let EB = gridCheck(grid, i, j+1, target);
+
+  let code = (NB<<0) + (SB << 1) + (EB << 2) + (WB << 3);
+  
+  return code;
+}
+
+function drawContext(grid, i, j, target, ti, tj, table){
+  const code = gridCode(grid, i, j, target)
+  const offset = table[code]
+  
+  if(offset){
+    placeTile(i, j, offset[0] + ti, offset[1] + tj);
+  }
+}
 
 function generateGrid(numCols, numRows) {
   let grid = [];
@@ -81,7 +112,7 @@ function generateGrid(numCols, numRows) {
       }
     }
   }
-  console.log("cener: " + room_centers);
+  //console.log("cener: " + room_centers);
   
   for(let i = 0; i<room_count-1; i++){
     let room = room_centers[i]
@@ -142,33 +173,44 @@ function generateGrid(numCols, numRows) {
   return grid;
 }
 
-function gridCheck(grid, i, j, target){
-  if(i < grid.length && j < grid[0].length && j>= 0 && i >= 0){
-    if(grid[i][j] == target){
-      return 1;
+
+function generateGrid2(numCols, numRows) {
+  let grid = [];
+
+  for (let i = 0; i < numRows; i++) {
+    let row = [];
+    for (let j = 0; j < numCols; j++) {
+      row.push("_");
     }
+    grid.push(row);
   }
-  return 0;
-}
-
-function gridCode(grid, i, j, target){
-  let NB = gridCheck(grid, i-1, j, target);
-  let SB = gridCheck(grid, i+1, j, target);
-  let WB = gridCheck(grid, i, j-1, target);
-  let EB = gridCheck(grid, i, j+1, target);
-
-  let code = (NB<<0) + (SB << 1) + (EB << 2) + (WB << 3);
-  
-  return code;
-}
-
-function drawContext(grid, i, j, target, ti, tj, table){
-  const code = gridCode(grid, i, j, target)
-  const offset = table[code]
-  
-  if(offset){
-    placeTile(i, j, offset[0] + ti, offset[1] + tj);
+  //mountain function
+  let inc = 0.01
+  let scale = 20
+  let yOff = 0;
+  for(let y = 0; y < numRows; y++){
+    let xOff = 0;
+    for(let x = 0; x < numCols; x++){
+      //let index = (x+y*numCols)*4;
+      let r = noise(xOff, yOff)*4;
+      
+      switch(floor(r)) {
+      case 2:
+        grid[x][y] = '+'
+        break;
+      case 1:
+        grid[x][y] = '-'
+        break;
+      default:
+        grid[x][y] = '_'
+      }
+      xOff += inc*scale
+    }
+    yOff += inc*scale
   }
+  
+  
+  return grid;
 }
 
 function drawGrid(grid) {
@@ -204,19 +246,48 @@ function drawGrid(grid) {
   drawFog()
 }
 
+function drawGrid2(grid){
+  background(128);
+  
+    //base desert pass
+    for(let i = 0; i < grid.length; i++) {
+      for(let j = 0; j < grid[i].length; j++) {
+        placeTile(i, j, 1+((j)%3), 18+(floor(random(2))))
+      }
+    }
+    
+    //dark sand rendering pass
+    for(let i = 0; i < grid.length; i++) {
+      for(let j = 0; j < grid[i].length; j++) {
+        if(gridCheck(grid, i, j, '_')){
+          placeTile(i, j, 9+((j)%3), 18+(floor(random(2))))
+        }
+      }
+    }
+    //mountain rendering pass
+    for(let i = 0; i < grid.length; i++) {
+      for(let j = 0; j < grid[i].length; j++) {
+        if(gridCheck(grid, i, j, '-')){
+          placeTile(i, j, 9+((j)%3), 18+(floor(random(2))))
+          drawContext(grid, i, j, '-', 0, 0, rockTable)
+        }
+      }
+    }
+}
+
 function drawFog(){
   noStroke()
   fill('rgba(250, 250, 250, 0.6)')
   let fogDetail = 30
   for(let i = 0; i<fogDetail; i++){
     let noiseLevel = noise(millis()*0.0001+i*random())*100;
-    console.log(noiseLevel)
+    //console.log(noiseLevel)
     ellipse(0+noiseLevel-45+i*i*0.06,height*i/fogDetail, 110, 120)
   }
   
   for(let i = 0; i<fogDetail; i++){
     let noiseLevel = noise(millis()*0.0001+i*random())*100;
-    console.log(noiseLevel)
+    //console.log(noiseLevel)
     ellipse(700-noiseLevel-i*i*0.06,height*i/fogDetail, 110, 120)
   }
 }
@@ -238,6 +309,26 @@ const wallTable = [
   [26,23], //Only S is different
   [26,21], //Only N is different
   [31,31] // everything is the same
+]
+
+const rockTable = [
+  //comments tell what parts relative of local location are the same
+  [14,3], // nothing
+  [14,3], // N
+  [14,3], //  S
+  [14,3],//  NS
+  [14,3], //  E
+  [15,5], //  NE
+  [15,3], //  SE
+  [15,4], //  NSE
+  [14,3], //  W
+  [17,5], //  NW
+  [17,3], // SW
+  [17,4], //NSW
+  [14,3], //EW
+  [16,5], // NEW
+  [16,3], // SEW
+  [16,4], // everything
 ]
 
 

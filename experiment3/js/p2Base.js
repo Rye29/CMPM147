@@ -6,6 +6,7 @@ let seed = 0;
 let tilesetImage;
 let currentGrid = [];
 let numRows, numCols;
+let currentCanvas = -1;
 
 function preload() {
   tilesetImage = loadImage(
@@ -21,8 +22,17 @@ function reseed() {
   regenerateGrid();
 }
 
+function switchCanvas(){
+  currentCanvas *= -1;
+  regenerateGrid();
+}
+
 function regenerateGrid() {
-  select("#asciiBox").value(gridToString(generateGrid(numCols, numRows)));
+  if(currentCanvas == -1){
+    select("#asciiBox").value(gridToString(generateGrid(numCols, numRows)));
+  }else{
+    select("#asciiBox").value(gridToString(generateGrid2(numCols, numRows)));
+  }
   reparseGrid();
 }
 
@@ -60,6 +70,8 @@ function setup() {
   select("canvas").elt.getContext("2d").imageSmoothingEnabled = false;
 
   select("#reseedButton").mousePressed(reseed);
+  select("#switchButton").mousePressed(switchCanvas);
+
   select("#asciiBox").input(reparseGrid);
 
   reseed();
@@ -68,7 +80,11 @@ function setup() {
 
 function draw() {
   randomSeed(seed);
-  drawGrid(currentGrid);
+  if(currentCanvas == -1){
+    drawGrid(currentGrid);
+  }else{
+    drawGrid2(currentGrid);
+  }
 }
 
 function placeTile(i, j, ti, tj) {
