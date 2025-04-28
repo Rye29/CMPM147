@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- This title is used for tabs and bookmarks -->
+	<title>Experiment 4b - Infinite Worlds</title>
+
+	<!-- Use UTF character set, a good idea with any webpage -->
+	<meta charset="UTF-8" />
+	<!-- Set viewport so page remains consistently scaled w narrow devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/site.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Load jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+	<!-- Load p5.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+
+	<!-- Link to javascript files - DEFER waits until all elements are rendered -->    <script type="text/javascript" src="../js/site.js" DEFER></script>   
+    <script src="js/xxhash.min.js" defer></script>
+    <script src="js/engine.js" defer></script>
+    <script src="js/my_world.js" defer></script>
+</head>
+<body>
+	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+	<main id="content">
+		<section>
+
+			<h1>Experiment 4b - Infinite Worlds</h1>
+
+			<div class="minor-section">
+                <h2>Snowy Mountain Generator</h2>
+				<div id="canvas-container">
+					<!-- canvas will be added here -->
+				</div>
+                <div class="fullscreen-box instructions">
+                    <div>
+                        Arrow keys scroll. Clicking digs for water.
+                    </div>
+                    <div>
+                        World seed: <input type="text" id="world-seed" value="xyzzy">
+                    </div>
+                    <!-- <button id="fullscreen">Fullscreen</button> -->
+                </div>
+			</div>
+
+			<div class="minor-section two-columns">
+                <div class="showcase-img">
+                    <img src="img/land-o-lakes.png" alt="Land O Lakes" />
+                </div>
+                <div>
+                    <h2>Description</h2>
+                    <p>An 'infinite world' is meant to create a nearly limitless experience to give a user a <br>
+						technically new experience everytime they dive in. For this experience, I replicated <br>
+						Minecraft's snowy mountain biome because most of the time when I think about <br>
+						wandering, it's almost always in a snowy plane, climbing slopes to explore a cold, yet <br>
+						curious land. In respect to my source material, you can leave your mark physically by <br>
+						digging out the ground to access underground water, making your mark on the land. <br></p>
+                </div>
+			</div>
+
+			<div class="minor-section">
+				<h2>Technical</h2>
+				<p> The moutainous terrain was created with a perlin noise map which was created by <br>
+					being fed a world seed. It is then fed through a finite distance algorithm which <br>
+					determines how high and how low each part of the map should look. I then created <br>
+					fake 3d using a 3/4th view in order to fake a 'z axis' (up/down in 3d space), using the <br>
+					combination of the x and y planes, side to side on the screen and up and down in 2d <br>
+					space. This fake up and down reflects the changes in physical altitude alongside a <br>
+					gradient that colors the the terrain based on the illusioned altitude. Finally, using the <br>
+					hash value of each world coordinate, I used an algorithm to populate the highest parts <br>
+					of the terrain with trees and cabins, both of which are sprites created by yours truly.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Reflection</h2>
+				<p>This one was much easier since I'd completed it earlier when I designed the course.</p>
+			</div>
+
+		</section>
+		<nav id="links" class="minor-section">
+			<!-- Put link back to homepage here. -->
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+		</nav>
+	</main>
+</body>
+</html>
