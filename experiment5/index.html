@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- This title is used for tabs and bookmarks -->
+	<title>Experiment 5 - Evolutionary Impressions</title>
+
+	<!-- Use UTF character set, a good idea with any webpage -->
+	<meta charset="UTF-8" />
+	<!-- Set viewport so page remains consistently scaled w narrow devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/site.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Load jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+	<!-- Load p5.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+
+	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
+    <script type="text/javascript" src="../js/site.js" DEFER></script>
+	<!-- Use me for a JavaScript OOP Project -->
+	<script type="text/javascript" src="./js/mydesign.js" DEFER></script>
+	<!-- Use me for a p5.js project -->
+	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+</head>
+<body>
+	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+	<main id="content">
+		<section>
+
+			<h1>Experiment 5 - Evolutionary Impressions</h1>
+
+			<div class="minor-section">
+				<div class="results-top">
+                    <div class="image-container">
+                        <p id="original"></p>
+                        <p class="caption"></p>
+                    </div>
+                    <div class="image-container">
+                        <p id="active"></p>
+                        <p>Active Image</p>
+                    </div>
+                    <div class="image-container">
+                        <p id="best"></p>
+                        <p>Best Image</p>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="controls-col1">
+                        <select id="dropper"></select>
+                        <button id="restart">
+                        restart
+                        </button>
+                        <p>
+                        Mutation rate (<span id="rate"></span>%):<br /><input
+                            id="slider"
+                            type="range"
+                            min="1"
+                            max="100"
+                            value="100"
+                        />
+                        </p>
+                    </div>
+                    <div class="controls-col2">
+                        <p>Active score: <span id="activeScore"></span></p>
+                        <p>Exploration rate: <span id="fpsCounter"></span> fps</p>
+                        <p>Best score: <span id="bestScore"></span></p>
+                    </div>
+                </div>
+
+                <div class="results-bottom">
+                    <p id="memory" data-max-items="28"></p>
+                </div>
+			</div>
+
+			<div class="minor-section">
+				<h2>Description</h2>
+				<p>In this experiment, I am trying to create a generator that reads an image <br>
+                   and tries to match the overall composition of it using primitive shapes and <br>
+                   colors. I used ellipses and rectangles because at the end of the day, you can <br>
+                   adapt any shape using sharp lines and arcs. The theme of this experiment, in my eyes,<br>
+                   is beauty in organized chaos as well as a testament to human pattern recognition.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Technical</h2>
+				<p>The genereator creates primitives in a grid fashion then averages the colors <br>
+                   of all the pixels in the area it covers. Once that's done, it adds a slight bit <br>
+                   of error to the coordinates of the shape before pushing it to an object container.<br>
+                   Finally, it mutates the design by randomizing the coordinates and dimensions of each<br>
+                   primitive within a boundary through a gaussian blur function. The higher the slider factor<br>
+                   the more drastic the mutations are. Finally, the images are evaluated and given a similarity<br>
+                   score and are then recorded. Best results are achieved when </p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Reflection</h2>
+				<p>Actually building this thing was a lot more difficult than I anticipated, primarily because <br>
+                    the example project on Professor Wes Modes portfolio was all based around black and white images.<br>
+                    I wanted to integrate color into mine to stand out which made the process a lot harder than it probably<br>
+                    should have been. Luckily thanks to Raven Cruz and Jackie Sanchez posting their solution to that <br>
+                    problem on the discord, I was able to debug my own and put my own spin on it by taking every pixel,<br>
+                    averaging out the color and using it as a fill background for each mutation.<br>
+                    <br>
+                    I thought that experimenting with the images and p5js’ loadpixel() index was a lot more fun than I<br>
+                    anticipated. Even though it was a struggle at first, it made me realize that I enjoy overcoming <br>
+                    challenges that are hard under the hood but simple on the surface. But I think the part that really<br> 
+                    shined during this experiment was actually getting to play around with the final product being part<br>
+                    of the requirements. At the end of the day, I felt this experiment was a pretty good one.</p>
+			</div>
+
+		</section>
+		<nav id="links" class="minor-section">
+			<!-- Put link back to homepage here. -->
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+		</nav>
+	</main>
+</body>
+</html>
